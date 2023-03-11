@@ -1,7 +1,9 @@
 const express=require("express")
+const cookieParser=require("cookie-parser")
 
 const app=express()
 const authRoute=require("./routes/auth")
+
 
 require('dotenv').config()
 
@@ -22,13 +24,13 @@ async function connectDb(){
 }
 
 app.use(express.json())
-
+app.use(cookieParser())
 
 app.use('/api/user',authRoute)
 
 async function main(){
     await connectDb()
-    app.listen(3000,()=>{
+    app.listen(3001,()=>{
         console.log("Server running at Port 3000")
     })
 }

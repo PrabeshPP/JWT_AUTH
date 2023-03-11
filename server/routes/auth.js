@@ -3,7 +3,7 @@ const router = express.Router()
 const User = require("../model/User");
 const {hashPassword,comparePassword}=require("../utils/hash");
 const {registrationSchema,loginSchema}=require("../utils/validation");
-const jwt=require('jsonwebtoken')
+const {refreshToken,accessToken}=require("../utils/token")
 
 
 router.post('/register', async (req, res) => {
@@ -52,6 +52,10 @@ router.post("/login", async(req, res) => {
             const result=await comparePassword(password,foundUser.password)
             if(result){
                 res.status(200)
+                const token=refreshToken({email:foundUser.email})
+                res.cookie('%982',token,{
+                    withCredentials:true,
+                });
                 res.json({"message":"Successfully Logged In"})
             }else{
                 res.status(403)
