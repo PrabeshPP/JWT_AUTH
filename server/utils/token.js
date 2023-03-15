@@ -15,6 +15,8 @@ const refreshToken=(payload)=>{
         email:payload.email,  
     },process.env.REFRESH_TOKEN_SECRET,
     {expiresIn:'1d'})
+     
+    return token;
 }
 
 module.exports={accessToken,refreshToken}

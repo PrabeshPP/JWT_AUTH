@@ -43,6 +43,7 @@ router.post('/register', async (req, res) => {
 router.post("/login", async(req, res) => {
     const email=req.body.email
     const password=req.body.password
+    
 
     const validation=loginSchema.validate({email:email,password:password})
 
@@ -53,8 +54,10 @@ router.post("/login", async(req, res) => {
             if(result){
                 res.status(200)
                 const token=refreshToken({email:foundUser.email})
-                res.cookie('%982',token,{
+                res.cookie("jwt", token, {
                     withCredentials:true,
+                    secure:false,
+                    domain:"localhost"
                 });
                 res.json({"message":"Successfully Logged In"})
             }else{

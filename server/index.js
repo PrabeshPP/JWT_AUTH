@@ -1,5 +1,6 @@
 const express=require("express")
 const cookieParser=require("cookie-parser")
+const cors=require("cors");
 
 const app=express()
 const authRoute=require("./routes/auth")
@@ -22,16 +23,24 @@ async function connectDb(){
         console.log("Oops!Looks Like Something Went Wrong")
     }
 }
+app.use(cors({
+    origin:["http://localhost:3000"],
+    methods:["GET","POST"],
+    credentials:true
+}));
 
-app.use(express.json())
+
 app.use(cookieParser())
+app.use(express.urlencoded({extended:false}))
+app.use(express.json())
+
 
 app.use('/api/user',authRoute)
 
 async function main(){
     await connectDb()
     app.listen(3001,()=>{
-        console.log("Server running at Port 3000")
+        console.log("Server running at Port 3001")
     })
 }
 

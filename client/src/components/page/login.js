@@ -1,12 +1,28 @@
 import { NavLink } from "react-router-dom";
+import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-
-    const onSubmitForm=(event)=>{
+    const navigate=useNavigate();
+    const onSubmitForm=async(event)=>{
         event.preventDefault()
         const email=event.target.email.value;
         const password=event.target.password.value;
+        const data={
+            "email":email,
+            "password":password
+        }
+
         // This is where I will send request to the backend to authenticate
+        const response=await axios.post("/api/user/login",data,{
+            withCredentials:true
+        })
+
+
+        navigate("/")
+
+        
+
         
     }
 
@@ -18,7 +34,6 @@ const Login = () => {
             <form onSubmit={onSubmitForm} className="mt-6">
                 <div className="mb-2">
                     <label
-                        for="email"
                         className="block text-sm font-semibold text-gray-800"
                     >
                         Email
@@ -31,7 +46,6 @@ const Login = () => {
                 </div>
                 <div className="mb-2">
                     <label
-                        for="password"
                         className="block text-sm font-semibold text-gray-800"
                     >
                         Password
