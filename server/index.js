@@ -3,7 +3,8 @@ const cookieParser=require("cookie-parser")
 const cors=require("cors");
 
 const app=express()
-const authRoute=require("./routes/auth")
+const authRoute=require("./routes/auth");
+const secretRoute=require("./routes/secret");
 
 
 require('dotenv').config()
@@ -36,6 +37,7 @@ app.use(express.json())
 
 
 app.use('/api/user',authRoute)
+app.use('/secret-page',secretRoute)
 
 async function main(){
     await connectDb()

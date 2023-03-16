@@ -19,4 +19,14 @@ const refreshToken=(payload)=>{
     return token;
 }
 
-module.exports={accessToken,refreshToken}
+const verifyToken=(payload)=>{
+    const token=payload.token;
+    try{
+        var decoded=jwt.verify(token,process.env.REFRESH_TOKEN_SECRET);
+        return decoded;
+    }catch(err){
+        return null;
+    }
+}
+
+module.exports={accessToken,refreshToken,verifyToken}
