@@ -13,7 +13,7 @@ const SecretPage=()=>{
         try{
             const response=await axios.get("/secret-page");
             const data=response.data;
-            console.log(data);
+            setMessage(data.message);
         }catch (err){
             Cookies.remove("jwt");
             setAuthToken();
@@ -25,7 +25,7 @@ const SecretPage=()=>{
        getSecret()
     },[])
     return <div className="h-[90vh] w-[100%] text-3xl font-bold flex justify-center items-center">
-        This is a secret Page!
+        {message}
     </div>
 }
 
